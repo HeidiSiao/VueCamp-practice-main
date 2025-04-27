@@ -1,15 +1,15 @@
 <script setup>
 import { ref } from 'vue'
-const text = ref('嗨')
+const text = ref('想做啥')
 
 const todos = ref([
   {
     id: 1745774181702,
-    item: '吃蛋糕',
+    item: '喝水',
   },
   {
     id: 2735784651709,
-    item: '吃炸雞',
+    item: '吃飯',
   },
 ])
 
@@ -67,8 +67,8 @@ const enterEdit = () => {
   </div> -->
     <div class="todo-box" v-for="todo in todos" :key="todo.id">
       <div v-for="[key, value] in Object.entries(todo)" :key="key">
-      <p>{{ key }}: {{ value }}</p>
-    </div>
+      <p class="todo-text">{{ key }}: {{ value }}</p>
+      </div>
     <div class="flex">
       <button @click="deleteTodo(todo)">Delete</button>
       <button @click="setEditItem(todo)">Edit</button>
@@ -108,8 +108,12 @@ const enterEdit = () => {
   color: slategrey;
   font-weight: bold;
   background-color: aliceblue;
+  
 }
 
+.todo-text {
+  font-weight: bold;
+}
 
 
 .area-title {
