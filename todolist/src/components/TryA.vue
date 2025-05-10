@@ -14,11 +14,10 @@ const todos = ref([
 ])
 
 // 新增暫存空物件 -->為了編輯用
-const tempEdit = ref ({
+const tempEdit = ref({
   id: '',
-  text: ''
+  text: '',
 })
-
 
 // 新增待辦
 const addTodo = () => {
@@ -30,58 +29,61 @@ const addTodo = () => {
 }
 
 // 刪除待辦
-const deleteTodo =(todo) => {
+const deleteTodo = (todo) => {
   // const index = todos.value.findIndex(item => item.id === todo.id);
   // console.log(index);
+  // 避免在找不到對應項目時誤刪錯誤資料index是-1的value
+  //   if (index !== -1) {
+  //   items.value.splice(index, 1);
+  // }
   // todos.value.splice(index,1);
-  todos.value = todos.value.filter( item => item.id !== todo.id)
+
+  todos.value = todos.value.filter((item) => item.id !== todo.id)
 }
 
 // 編輯待辦
 const setEditItem = (todo) => {
   // tempEdit.value = todo;
   // 物件傳參考原會直接連動修改->淺拷貝
-  tempEdit.value = {...todo};
+  tempEdit.value = { ...todo }
 }
 
 const enterEdit = () => {
-   const index = todos.value.findIndex(item => item.id === tempEdit.value.id);
-   todos.value[index] = tempEdit.value
+  const index = todos.value.findIndex((item) => item.id === tempEdit.value.id)
+  todos.value[index] = tempEdit.value
 }
 </script>
 
 <template>
   <div class="container">
-
     <section class="flex">
       <h3 class="area-title">待辦事項啦</h3>
       <input type="text" v-model="text" />
       <button type="button" @click="addTodo">Add Item</button>
     </section>
 
-
-  <section class="todo-section">
-  <!-- 
+    <section class="todo-section">
+      <!-- 
     <div class="todo-box" v-for="[key, value] in Object.entries(todos)" :key="key">
     <p>{{ key }} : {{ value }}</p>
   </div> -->
-    <div class="todo-box" v-for="todo in todos" :key="todo.id">
-      <div v-for="[key, value] in Object.entries(todo)" :key="key">
-      <p class="todo-text">{{ key }}: {{ value }}</p>
+      <div class="todo-box" v-for="todo in todos" :key="todo.id">
+        <div v-for="[key, value] in Object.entries(todo)" :key="key">
+          <p class="todo-text">{{ key }}: {{ value }}</p>
+        </div>
+        <div class="flex">
+          <button @click="deleteTodo(todo)">Delete</button>
+          <button @click="setEditItem(todo)">Edit</button>
+        </div>
       </div>
-    <div class="flex">
-      <button @click="deleteTodo(todo)">Delete</button>
-      <button @click="setEditItem(todo)">Edit</button>
-    </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="flex">
-    <h3 class="area-title">編輯區域啦</h3>
-    <input type="text" v-model="tempEdit.item">
-    <button type="button" @click="enterEdit">Enter</button>
-  </section>
-</div>
+    <section class="flex">
+      <h3 class="area-title">編輯區域啦</h3>
+      <input type="text" v-model="tempEdit.item" />
+      <button type="button" @click="enterEdit">Enter</button>
+    </section>
+  </div>
 </template>
 
 <style scoped>
@@ -108,13 +110,11 @@ const enterEdit = () => {
   color: slategrey;
   font-weight: bold;
   background-color: aliceblue;
-  
 }
 
 .todo-text {
   font-weight: bold;
 }
-
 
 .area-title {
   font-weight: 700;
@@ -133,7 +133,6 @@ const enterEdit = () => {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  
 }
 
 button {
@@ -147,6 +146,5 @@ button {
 
 input {
   margin-inline: 8px;
-
 }
 </style>
